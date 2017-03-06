@@ -13,10 +13,6 @@ class ViewController: UIViewController {
     
     var tipPercentages = [18, 20, 25]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         let defaults = UserDefaults.standard
         
@@ -27,10 +23,6 @@ class ViewController: UIViewController {
             tipControl.selectedSegmentIndex = index
         }
         calculateTip(self)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     @IBAction func onTap(_ sender: Any) {
