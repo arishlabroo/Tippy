@@ -11,8 +11,22 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tipControl: UISegmentedControl!
     
+    var tipPercentages = [18, 20, 25]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let defaults = UserDefaults.standard
+        
+        let selected = defaults.object(forKey: "tipDefault")
+        
+        if ( selected != nil) {
+            let index = tipPercentages.index(of: (selected as! Int)) ?? 0
+            tipControl.selectedSegmentIndex = index
+        }
+        calculateTip(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,10 +38,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func calculateTip(_ sender: AnyObject) {
-        let tipPercentages = [0.18, 0.20, 0.25]
         
         let bill = Double(billField.text!) ?? 0
-        let tip = bill * tipPercentages[tipControl.selectedSegmentIndex]
+        let tipInPercent = (Double(tipPercentages[tipControl.selectedSegmentIndex]) / 100)
+        let tip = bill * (tipInPercent)
         let total = bill + tip
         
         tipLabel.text = String(format: "$%.2f", tip) //"$\(tip)"
